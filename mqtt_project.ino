@@ -4,14 +4,14 @@
 
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-#include "DHTesp.h"
+#include "DHTesp.h"  //온습도계사용을 위함
 // Update these with values suitable for your network.
 const char* ssid = "olleh_WiFi_FB93"; // 와이파이 AP, 또는 스마트폰의 핫스판 이름
 const char* password = "0000002461";  // 와이파이 AP, 또는 스마트폰의 핫스판 이름
 const char* mqtt_server = "172.30.1.44"; //자신의 브로커 주소
 const char* clientName = "980303Client";  // 다음 이름이 중복되지 않게 꼭 수정 바람 - 생년월일 추천
-DHTesp dht;
 
+DHTesp dht;
 WiFiClient espClient;
 PubSubClient client(espClient);
 
@@ -33,7 +33,8 @@ void setup_wifi() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 
-  dht.setup(D4, DHTesp::DHT11); 
+  dht.setup(D4, DHTesp::DHT11);   //온습도계와 연결된 pin 번호 D4, 우리가 사용하는 온습도계 타입이 DHT11타입임을 선언하다.
+  
 }
 void callback(char* topic, byte* payload, unsigned int uLen) {
    char pBuffer[uLen+1];
@@ -69,11 +70,11 @@ void reconnect() {
   }
 }
 void setup() {
-  pinMode(14, OUTPUT);     // Initialize the BUILTIN_LED pin as an output
+  pinMode(14, OUTPUT);     // led와 연결된 pin 번호 14
   Serial.begin(115200);
   setup_wifi();
   client.setServer(mqtt_server, 1883);
-  client.setCallback(callback);
+  client.setCallback(callback);  //wemos에서 데이터가 수신이 되면 callback함수 호출
 }
  void loop() {
   if (!client.connected()) {
