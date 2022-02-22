@@ -37,14 +37,14 @@ void setup_wifi() {
   
 }
 void callback(char* topic, byte* payload, unsigned int uLen) {
-   char pBuffer[uLen+1];
+   char pBuffer[uLen+1];  //ulen은 mqtt에서 넘겨주는 데이터의 길이인데 데이터의 끝을 알리기 위해 마지막에 null값을 넣기위해서 1을 추가한다
    int i;
    for(i=0;i<uLen;i++){
          pBuffer[i]=payload[i];
    }
-   pBuffer[i]='\0';
+   pBuffer[i]='\0'; //문자열 마지막 표시
    Serial.println(pBuffer); // 1, 2
-   if(pBuffer[0]=='1'){
+   if(pBuffer[0]=='1'){  // led 제어 부분
       digitalWrite(14, HIGH);
    }else if(pBuffer[0]=='2'){
       digitalWrite(14, LOW);
@@ -59,7 +59,7 @@ void reconnect() {
     if (client.connect(clientName)) {
       Serial.println("connected");
       // ... and resubscribe
-      client.subscribe("led");
+      client.subscribe("led");  // mqtt에 접속이 됐다면 subscribe의 topic을 led로 지정한다.
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -81,16 +81,17 @@ void setup() {
     reconnect();
   }
     client.loop();
-
-    float hum = dht.getHumidity();
-    float tmp = dht.getTemperature();
+   
+    float hum = dht.getHumidity();  //습도
+    float tmp = dht.getTemperature();  //온도
     char message[64]="", pTmpBuf[50], pHumBuf[50];
-    dtostrf(tmp, 5,2, pTmpBuf);
+    dtostrf(tmp, 5,2, pTmpBuf); //tmp 의 값을 소수 둘째자리 까지 pTmpBuf에 저장하낟.
     dtostrf(hum, 5,2, pHumBuf);
-    sprintf(message, "{\"tmp\":%s,\"hum\":%s}", pTmpBuf, pHumBuf);   
+   //nodejs로 넘어가기전에 온습도 정보를 mqtt에 보내는데 
+    sprintf(message, "{\"tmp\":%s,\"hum\":%s}", pTmpBuf, pHumBuf);  //json 형식으로 서버에 보낸다  
     Serial.print("Publish message: ");
     Serial.println(message);
-    client.publish("dht11", message);
+    client.publish("dht11", message); //mqtt 로 전송 topic 은 dht11
    
     delay(3000); // 3초
   }
