@@ -1,3 +1,7 @@
+//온도습도 정보를 mptt에 보내고 mptt에 정보를 읽어와서 led를 제어
+
+
+
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include "DHTesp.h"
