@@ -23,10 +23,10 @@
 
 // Update these with values suitable for your network.
 
-const char* ssid = "nslab_5g";
-const char* password = "unsuns8506";
-const char* mqtt_server = "203.249.22.49";
-const char* clientName ="980401Client";
+const char* ssid = "";
+const char* password = "";
+const char* mqtt_server = "";
+const char* clientName ="";
 
 WiFiClient espClient;
 PubSubClient client(espClient);

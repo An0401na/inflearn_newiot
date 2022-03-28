@@ -6,10 +6,10 @@
 #include <PubSubClient.h>
 #include "DHTesp.h"  //온습도계사용을 위함
 // Update these with values suitable for your network.
-const char* ssid = "olleh_WiFi_FB93"; // 와이파이 AP, 또는 스마트폰의 핫스판 이름
-const char* password = "0000002461";  // 와이파이 AP, 또는 스마트폰의 핫스판 이름
-const char* mqtt_server = "172.30.1.44"; //자신의 브로커 주소
-const char* clientName = "980303Client";  // 다음 이름이 중복되지 않게 꼭 수정 바람 - 생년월일 추천
+const char* ssid = ""; // 와이파이 AP, 또는 스마트폰의 핫스판 이름
+const char* password = "";  // 와이파이 AP, 또는 스마트폰의 핫스판 이름
+const char* mqtt_server = ""; //자신의 브로커 주소
+const char* clientName = "";  // 다음 이름이 중복되지 않게 꼭 수정 바람 - 생년월일 추천
 
 DHTesp dht;
 WiFiClient espClient;
